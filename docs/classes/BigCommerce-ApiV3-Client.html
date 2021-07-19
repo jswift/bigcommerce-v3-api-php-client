@@ -58,6 +58,7 @@
                                                 <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/bigcommerce.html"><abbr title="\BigCommerce">BigCommerce</abbr></a></h4>
                 <ul class="phpdocumentor-list">
                                             <li><a href="namespaces/bigcommerce-apiv3.html"><abbr title="\BigCommerce\ApiV3">ApiV3</abbr></a></li>
+                                            <li><a href="namespaces/bigcommerce-apiv2.html"><abbr title="\BigCommerce\ApiV2">ApiV2</abbr></a></li>
                                     </ul>
                         </section>
 
@@ -85,6 +86,9 @@
         <h2 class="phpdocumentor-content__title">
     Client
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/BigCommerce-ApiV3-BaseApiClient.html"><abbr title="\BigCommerce\ApiV3\BaseApiClient">BaseApiClient</abbr></a>
+    </span>
     
     
     
@@ -93,12 +97,60 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">82</span>
 
     </aside>
 
-        
-    <section class="phpdocumentor-description"></section>
+            <p class="phpdocumentor-summary">The parent API class</p>
+
+    <section class="phpdocumentor-description"><h2>Usage Examples</h2>
+<p>Trivial example of updating a product name:</p>
+<pre class="prettyprint"><code class="language-php">$api = new BigCommerce\ApiV3\Client($_ENV['hash'], $_ENV['CLIENT_ID'], $_ENV['ACCESS_TOKEN']);
+
+$product = $api-&gt;catalog()-&gt;product(123)-&gt;get()-&gt;getProduct();
+$product-&gt;name = 'Updated product name';
+try {
+    $api-&gt;catalog()-&gt;product($product-&gt;id)-&gt;update($product);
+} catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
+    echo &quot;Unable to update product: {$exception-&gt;getMessage()}&quot;;
+}
+</code></pre>
+<p>Fetching all visible products (all pages of products):</p>
+<pre class="prettyprint"><code class="language-php">$api = new BigCommerce\ApiV3\Client($_ENV['hash'], $_ENV['CLIENT_ID'], $_ENV['ACCESS_TOKEN']);
+
+$productsResponse = $api-&gt;catalog()-&gt;products()-&gt;getAllPages(['is_visible' =&gt; true]);
+
+echo &quot;Found {$productsResponse-&gt;getPagination()-&gt;total} products&quot;;
+
+$products = $productsResponse-&gt;getProducts();
+</code></pre>
+<p>Example of updating a product variant</p>
+<pre class="prettyprint"><code class="language-php">$api = new BigCommerce\ApiV3\Client($_ENV['hash'], $_ENV['CLIENT_ID'], $_ENV['ACCESS_TOKEN']);
+
+$productVariant = $api-&gt;catalog()-&gt;product(123)-&gt;variant(456)-&gt;get()-&gt;getProductVariant();
+$productVariant-&gt;price = '12';
+
+try {
+    $api-&gt;catalog()-&gt;product($productVariant-&gt;product_id)-&gt;variant($productVariant-&gt;id)-&gt;update($productVariant);
+} catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
+    echo &quot;Unable to update product variant: {$exception-&gt;getMessage()}&quot;;
+}
+</code></pre>
+<p>Example of creating a product variant</p>
+<pre class="prettyprint"><code class="language-php">$api = new BigCommerce\ApiV3\Client($_ENV['hash'], $_ENV['CLIENT_ID'], $_ENV['ACCESS_TOKEN']);
+
+$productVariant = new \BigCommerce\ApiV3\ResourceModels\Catalog\Product\ProductVariant();
+$productVariant-&gt;product_id = 123;
+$productVariant-&gt;sku = &quot;SKU-123&quot;;
+//...
+
+try {
+    $api-&gt;catalog()-&gt;product($productVariant-&gt;product_id)-&gt;variants()-&gt;create($productVariant);
+} catch (\Psr\Http\Client\ClientExceptionInterface $exception) {
+    echo &quot;Unable to create product variant: {$exception-&gt;getMessage()}&quot;;
+}
+</code></pre>
+</section>
 
 
 
@@ -121,42 +173,28 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_BASE_URI">DEFAULT_BASE_URI</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_BASE_URI">DEFAULT_BASE_URI</a>
     <span>
         &nbsp;= &#039;base_uri&#039;                    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_HANDLER">DEFAULT_HANDLER</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_HANDLER">DEFAULT_HANDLER</a>
     <span>
         &nbsp;= &#039;handler&#039;                    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_HEADERS">DEFAULT_HEADERS</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_HEADERS">DEFAULT_HEADERS</a>
     <span>
         &nbsp;= &#039;headers&#039;                    </span>
 </dt>
 <dd></dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#constant_HEADERS__AUTH_CLIENT">HEADERS__AUTH_CLIENT</a>
-    <span>
-        &nbsp;= &#039;X-Auth-Client&#039;                    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#constant_HEADERS__AUTH_TOKEN">HEADERS__AUTH_TOKEN</a>
-    <span>
-        &nbsp;= &#039;X-Auth-Token&#039;                    </span>
-</dt>
-<dd></dd>
-
                     <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method___construct">__construct()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method___construct">__construct()</a>
     <span>
                         &nbsp;: mixed    </span>
 </dt>
@@ -219,14 +257,14 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_getBaseUri">getBaseUri()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_getBaseUri">getBaseUri()</a>
     <span>
                         &nbsp;: string    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_getRestClient">getRestClient()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_getRestClient">getRestClient()</a>
     <span>
                         &nbsp;: <abbr title="\GuzzleHttp\Client">Client</abbr>    </span>
 </dt>
@@ -261,14 +299,14 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_printDebug">printDebug()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_printDebug">printDebug()</a>
     <span>
                         &nbsp;: mixed    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_printDebugLastRequest">printDebugLastRequest()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_printDebugLastRequest">printDebugLastRequest()</a>
     <span>
                         &nbsp;: mixed    </span>
 </dt>
@@ -296,14 +334,14 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_setBaseUri">setBaseUri()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_setBaseUri">setBaseUri()</a>
     <span>
                         &nbsp;: mixed    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/BigCommerce-ApiV3-Client.html#method_setRestClient">setRestClient()</a>
+    <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_setRestClient">setRestClient()</a>
     <span>
                         &nbsp;: void    </span>
 </dt>
@@ -349,7 +387,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -372,13 +410,13 @@
                     <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_DEFAULT_BASE_URI">
         DEFAULT_BASE_URI
-        <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_BASE_URI" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_BASE_URI" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">11</span>
 
     </aside>
 
@@ -401,13 +439,13 @@
                     <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_DEFAULT_HANDLER">
         DEFAULT_HANDLER
-        <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_HANDLER" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_HANDLER" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">10</span>
 
     </aside>
 
@@ -430,13 +468,13 @@
                     <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_DEFAULT_HEADERS">
         DEFAULT_HEADERS
-        <a href="classes/BigCommerce-ApiV3-Client.html#constant_DEFAULT_HEADERS" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#constant_DEFAULT_HEADERS" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
 
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">24</span>
+    <span class="phpdocumentor-element-found-in__line">12</span>
 
     </aside>
 
@@ -446,64 +484,6 @@
     <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">DEFAULT_HEADERS</span>
     = <span class="phpdocumentor-signature__default-value">&#039;headers&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_HEADERS__AUTH_CLIENT">
-        HEADERS__AUTH_CLIENT
-        <a href="classes/BigCommerce-ApiV3-Client.html#constant_HEADERS__AUTH_CLIENT" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">25</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">HEADERS__AUTH_CLIENT</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;X-Auth-Client&#039;</span>
-</code>
-
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article class="phpdocumentor-element -constant -public ">
-    <h4 class="phpdocumentor-element__name" id="constant_HEADERS__AUTH_TOKEN">
-        HEADERS__AUTH_TOKEN
-        <a href="classes/BigCommerce-ApiV3-Client.html#constant_HEADERS__AUTH_TOKEN" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">26</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-signature phpdocumentor-code ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-    <span class="phpdocumentor-signature__type">mixed</span>
-    <span class="phpdocumentor-signature__name">HEADERS__AUTH_TOKEN</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;X-Auth-Token&#039;</span>
 </code>
 
 
@@ -531,12 +511,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -604,7 +584,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
@@ -648,7 +628,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -681,7 +661,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -714,7 +694,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
     </aside>
 
@@ -758,7 +738,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">172</span>
 
     </aside>
 
@@ -791,7 +771,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -824,7 +804,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -857,7 +837,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -885,12 +865,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getBaseUri">
         getBaseUri()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_getBaseUri" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_getBaseUri" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -918,12 +898,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_getRestClient">
         getRestClient()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_getRestClient" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_getRestClient" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -956,7 +936,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1000,7 +980,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">152</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -1033,7 +1013,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -1077,7 +1057,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -1105,12 +1085,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_printDebug">
         printDebug()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_printDebug" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_printDebug" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">84</span>
 
     </aside>
 
@@ -1138,12 +1118,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_printDebugLastRequest">
         printDebugLastRequest()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_printDebugLastRequest" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_printDebugLastRequest" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -1176,7 +1156,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -1209,7 +1189,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">157</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -1253,7 +1233,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">164</span>
+    <span class="phpdocumentor-element-found-in__line">147</span>
 
     </aside>
 
@@ -1281,12 +1261,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setBaseUri">
         setBaseUri()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_setBaseUri" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_setBaseUri" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
     </aside>
 
@@ -1325,12 +1305,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_setRestClient">
         setRestClient()
-        <a href="classes/BigCommerce-ApiV3-Client.html#method_setRestClient" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BigCommerce-ApiV3-BaseApiClient.html#method_setRestClient" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/BaseApiClient.php"><a href="files/bigcommerce-baseapiclient.html"><abbr title="BigCommerce/BaseApiClient.php">BaseApiClient.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">86</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1374,7 +1354,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">128</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1418,7 +1398,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -1451,7 +1431,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/Client.php"><a href="files/bigcommerce-client.html"><abbr title="BigCommerce/Client.php">Client.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">169</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 

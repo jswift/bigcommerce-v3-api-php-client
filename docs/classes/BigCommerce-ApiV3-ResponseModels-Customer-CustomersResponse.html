@@ -58,6 +58,7 @@
                                                 <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/bigcommerce.html"><abbr title="\BigCommerce">BigCommerce</abbr></a></h4>
                 <ul class="phpdocumentor-list">
                                             <li><a href="namespaces/bigcommerce-apiv3.html"><abbr title="\BigCommerce\ApiV3">ApiV3</abbr></a></li>
+                                            <li><a href="namespaces/bigcommerce-apiv2.html"><abbr title="\BigCommerce\ApiV2">ApiV2</abbr></a></li>
                                     </ul>
                         </section>
 
@@ -88,7 +89,7 @@
     CustomersResponse
 
         <span class="phpdocumentor-element__extends">
-        extends <a href="classes/BigCommerce-ApiV3-ResponseModels-PaginatedResponse.html"><abbr title="\BigCommerce\ApiV3\ResponseModels\PaginatedResponse">PaginatedResponse</abbr></a>
+        extends <a href="classes/BigCommerce-ApiV3-ResponseModels-PaginatedBatchableResponse.html"><abbr title="\BigCommerce\ApiV3\ResponseModels\PaginatedBatchableResponse">PaginatedBatchableResponse</abbr></a>
     </span>
     
     
@@ -98,7 +99,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/ResponseModels/Customer/CustomersResponse.php"><a href="files/bigcommerce-responsemodels-customer-customersresponse.html"><abbr title="BigCommerce/ResponseModels/Customer/CustomersResponse.php">CustomersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">9</span>
+    <span class="phpdocumentor-element-found-in__line">8</span>
 
     </aside>
 
@@ -122,6 +123,13 @@
     <a href="classes/BigCommerce-ApiV3-ResponseModels-PaginatedResponse.html#method___construct">__construct()</a>
     <span>
                         &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/BigCommerce-ApiV3-ResponseModels-PaginatedBatchableResponse.html#method_buildFromMultipleResponses">buildFromMultipleResponses()</a>
+    <span>
+                        &nbsp;: static    </span>
 </dt>
 <dd></dd>
 
@@ -200,6 +208,48 @@
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_buildFromMultipleResponses">
+        buildFromMultipleResponses()
+        <a href="classes/BigCommerce-ApiV3-ResponseModels-PaginatedBatchableResponse.html#method_buildFromMultipleResponses" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/ResponseModels/PaginatedBatchableResponse.php"><a href="files/bigcommerce-responsemodels-paginatedbatchableresponse.html"><abbr title="BigCommerce/ResponseModels/PaginatedBatchableResponse.php">PaginatedBatchableResponse.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">17</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">buildFromMultipleResponses</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$responses</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">static</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$responses</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">static</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_getCustomers">
@@ -209,7 +259,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="BigCommerce/ResponseModels/Customer/CustomersResponse.php"><a href="files/bigcommerce-responsemodels-customer-customersresponse.html"><abbr title="BigCommerce/ResponseModels/Customer/CustomersResponse.php">CustomersResponse.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">14</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
     </aside>
 

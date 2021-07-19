@@ -6,6 +6,6 @@ has been added to allow for a common parent to both the V3 and V2 apis.
 
 ### New Features
 
- - Add support for creating Orders via the V2 API. It's a bit rough at the moment,
-   but since this hasn't been implemented in BigCommerce V3 yet, it will do. In the future
-   this will be removed in favour of a V3 API.
+ - Add support for creating Orders via the V2 API. In the future  this will be removed in favour of a V3 API when an endpoint is added.
+ - Add `CustomersApi::getAllPages()` which allows fetching all the Customers matching the filter in one request.
+
